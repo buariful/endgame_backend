@@ -41,6 +41,25 @@ async function run() {
             res.send(tasks);
 
         })
+
+        app.post('/uptodos', async (req, res) => {
+            const todo = req.body;
+            const result = dbConnection.insertOne(todo);
+            res.send(result);
+        })
+        app.post('/upcomplete', async (req, res) => {
+            const todo = req.body;
+            const result = completedCollection.insertOne(todo);
+            res.send(result);
+        })
+
+        app.delete('/deletetask/:id', async (req, res) => {
+            const todoId = req.params.id;
+            const query = { _id: todoId }
+            const result = await dbConnection.deleteOne(query)
+
+            res.send(result);
+        })
     }
     finally {
 
