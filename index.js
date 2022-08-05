@@ -25,10 +25,18 @@ async function run() {
     try {
         await client.connect();
         const dbConnection = client.db('all_tasks').collection('todo_tasks');
+        const completedCollection = client.db('all_tasks').collection('completed_task');
 
         app.get('/todos', async (req, res) => {
             const query = {};
             const cursor = dbConnection.find(query);
+            const tasks = await cursor.toArray();
+            res.send(tasks);
+
+        })
+        app.get('/completed', async (req, res) => {
+            const query = {};
+            const cursor = completedCollection.find(query);
             const tasks = await cursor.toArray();
             res.send(tasks);
 
