@@ -57,7 +57,6 @@ async function run() {
             const todoId = req.params.id;
             const query = { _id: todoId }
             const result = await dbConnection.deleteOne(query)
-
             res.send(result);
         })
     }
